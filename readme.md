@@ -1,0 +1,1 @@
+This is the backend project for Pleiades, a mobile network test drive application
