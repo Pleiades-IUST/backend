@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/Pleiades-IUST/backend/utils/config"
+	"github.com/Pleiades-IUST/backend/webservice/drive"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -25,6 +26,12 @@ func SetupRouter() *gin.Engine {
 	e.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")
 	})
+
+	e.GET("/favicon.ico", func(c *gin.Context) {
+		c.File("./assets/favicon.ico")
+	})
+
+	drive.Register(e)
 
 	return e
 }

@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+    volumes:
+      - pleiades_pg_data:/var/lib/postgresql/data
+    restart: always
+  pleiades:
+    build: 
+      context: .
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    restart: always
+volumes:
+  pleiades_pg_data:

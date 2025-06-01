@@ -1,3 +1,6 @@
+#!/bin/bash
+source .env
+
 COMMON_DB_ARGS="-h $DB_HOST -U $DB_USER -p $DB_PORT"
 
 # Create the database unconditionally

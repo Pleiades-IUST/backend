@@ -1,48 +1,48 @@
 package config
 
-import "os"
+import (
+	"os"
+
+	"github.com/joho/godotenv"
+)
 
 type Config string
 
-var (
-	dbUser  = os.Getenv("DB_USER")
-	dbPass  = os.Getenv("DB_PASS")
-	dbHost  = os.Getenv("DB_HOST")
-	dbPort  = os.Getenv("DB_PORT")
-	dbName  = os.Getenv("DB_NAME")
-	dbLog   = os.Getenv("DB_LOG")
-	ginMode = os.Getenv("GIN_MODE")
-	port    = os.Getenv("PORT")
-)
+func init() {
+	err := godotenv.Load()
+	if err != nil {
+		panic(err)
+	}
+}
 
 func GetDBUser() string {
-	return dbUser
+	return os.Getenv("DB_USER")
 }
 
 func GetDBPass() string {
-	return dbPass
+	return os.Getenv("DB_PASS")
 }
 
 func GetDBHost() string {
-	return dbHost
+	return os.Getenv("DB_HOST")
 }
 
 func GetDBPort() string {
-	return dbPort
+	return os.Getenv("DB_PORT")
 }
 
 func GetDBName() string {
-	return dbName
+	return os.Getenv("DB_NAME")
 }
 
 func GetDBLog() string {
-	return dbLog
+	return os.Getenv("DB_LOG")
 }
 
 func GetGinMode() string {
-	return ginMode
+	return os.Getenv("GIN_MODE")
 }
 
 func GetPort() string {
-	return port
+	return os.Getenv("PORT")
 }
