@@ -56,8 +56,46 @@ func CreateDrive(ctx *gin.Context) {
 	ctx.Status(http.StatusOK)
 }
 
-func FetchAllSignals(ctx *gin.Context) {
+func FetchAllDrives(ctx *gin.Context) {
+	tx := dbutil.GormDB(ctx)
 
+	drives := []*Drive{}
+
+	err := tx.Table("drive").Scan(&drives).Error
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	ctx.JSON(http.StatusOK, drives)
+}
+
+func FetchSignals(ctx *gin.Context) {
+	tx := dbutil.GormDB(ctx)
+
+	request := struct {
+		DriveID int64 `json:"drive_id"`
+	}{}
+
+	err := ctx.ShouldBindBodyWithJSON(&request)
+	if err != nil {
+		ctx.String(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	driveID := request.DriveID
+
+	signals := []Signal{}
+
+	err = tx.Table("signal").
+		Where("drive_id = ?", driveID).
+		Scan(&signals).Error
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	ctx.JSON(http.StatusOK, signals)
 }
 
 func GenerateRandomString(length int) string {
