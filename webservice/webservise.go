@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/Pleiades-IUST/backend/utils/config"
+	"github.com/Pleiades-IUST/backend/webservice/auth"
 	"github.com/Pleiades-IUST/backend/webservice/drive"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -32,6 +33,7 @@ func SetupRouter() *gin.Engine {
 	})
 
 	drive.Register(e)
+	auth.RegisterHandlers(e)
 
 	return e
 }
