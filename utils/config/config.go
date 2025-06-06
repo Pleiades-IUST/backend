@@ -46,3 +46,7 @@ func GetGinMode() string {
 func GetPort() string {
 	return os.Getenv("PORT")
 }
+
+func GetSecretKey() string {
+	return os.Getenv("SECRET_KEY")
+}
