@@ -47,6 +47,10 @@ func GetPort() string {
 	return os.Getenv("PORT")
 }
 
+func GetHost() string {
+	return os.Getenv("HOST")
+}
+
 func GetSecretKey() string {
 	return os.Getenv("SECRET_KEY")
 }

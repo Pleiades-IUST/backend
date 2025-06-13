@@ -11,7 +11,7 @@ func main() {
 
 	r := webservice.SetupRouter()
 
-	if err := r.Run(fmt.Sprintf(":%s", config.GetPort())); err != nil {
+	if err := r.Run(fmt.Sprintf("%s:%s", config.GetHost(), config.GetPort())); err != nil {
 		panic(err)
 	}
 

@@ -7,5 +7,5 @@ func Register(e *gin.Engine) {
 
 	r.POST("", CreateDrive)
 	r.GET("all", FetchAllDrives)
-	r.GET("signals", FetchSignals)
+	r.POST("signals", FetchSignals)
 }

@@ -1,8 +1,20 @@
 CREATE TABLE IF NOT EXISTS signal (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     drive_id BIGINT REFERENCES drive(id),
+    plmn_id TEXT,
+    cell_id TEXT,
     technology TEXT,
-    strength INT,
+    signal_strength REAL,
+    download_rate REAL,
+    upload_rate REAL,
+    dns_lookup_time REAL,
+    ping REAL,
+    sms_delivery_time REAL,
     rsrp INT,
-    rsrq INT
+    rsrq INT,
+    longitude REAL,
+    latitude REAL,
+    pci TEXT,
+    tac TEXT,
+    record_time TIMESTAMPTZ
 );

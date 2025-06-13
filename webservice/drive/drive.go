@@ -51,6 +51,7 @@ func CreateDrive(ctx *gin.Context) {
 	})
 	if err != nil {
 		ctx.String(http.StatusInternalServerError, err.Error())
+		return
 	}
 
 	ctx.Status(http.StatusOK)
