@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/Pleiades-IUST/backend/utils/dbutil"
+	"github.com/Pleiades-IUST/backend/utils/ginutil"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -15,6 +16,8 @@ func CreateDrive(ctx *gin.Context) {
 		Drive   *Drive
 		Signals []*Signal
 	}{}
+
+	userID := ginutil.GetUserID(ctx)
 
 	err := ctx.ShouldBindJSON(&testDriveData)
 	if err != nil {
@@ -29,6 +32,8 @@ func CreateDrive(ctx *gin.Context) {
 	if len(testDriveData.Drive.Name) == 0 {
 		testDriveData.Drive.Name = GenerateRandomString(10)
 	}
+
+	testDriveData.Drive.UserID = userID
 
 	tx := dbutil.GormDB(ctx.Request.Context())
 
@@ -60,9 +65,11 @@ func CreateDrive(ctx *gin.Context) {
 func FetchAllDrives(ctx *gin.Context) {
 	tx := dbutil.GormDB(ctx)
 
+	userID := ginutil.GetUserID(ctx)
+
 	drives := []*Drive{}
 
-	err := tx.Table("drive").Scan(&drives).Error
+	err := tx.Table("drive").Where("user_id = ?", userID).Scan(&drives).Error
 	if err != nil {
 		ctx.String(http.StatusInternalServerError, err.Error())
 		return
@@ -73,6 +80,8 @@ func FetchAllDrives(ctx *gin.Context) {
 
 func FetchSignals(ctx *gin.Context) {
 	tx := dbutil.GormDB(ctx)
+
+	userID := ginutil.GetUserID(ctx)
 
 	request := struct {
 		DriveID int64 `json:"drive_id"`
@@ -88,8 +97,10 @@ func FetchSignals(ctx *gin.Context) {
 
 	signals := []Signal{}
 
-	err = tx.Table("signal").
-		Where("drive_id = ?", driveID).
+	err = tx.Table("signal AS s").
+		Joins("JOIN drive AS d ON s.drive_id = d.id").
+		Where("s.drive_id = ? AND d.user_id = ?", driveID, userID).
+		Select("s.*").
 		Scan(&signals).Error
 	if err != nil {
 		ctx.String(http.StatusInternalServerError, err.Error())
