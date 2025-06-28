@@ -89,7 +89,7 @@ func login(ctx *gin.Context) {
 	// compare password
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password))
 	if errors.Is(err, bcrypt.ErrMismatchedHashAndPassword) {
-		ctx.Status(http.StatusBadRequest)
+		ctx.String(http.StatusBadRequest, "username or password is incorrect")
 		return
 	} else if err != nil {
 		ctx.Status(http.StatusInternalServerError)
