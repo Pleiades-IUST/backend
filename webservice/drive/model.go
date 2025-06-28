@@ -10,7 +10,7 @@ type Drive struct {
 	ID        int64     `json:"id"`
 	Name      string    `json:"name"`
 	CreatedAt time.Time `json:"created_at"`
-	UserID    int64
+	UserID    int64     `json:"user_id"`
 }
 
 func (Drive) TableName() string {
@@ -35,6 +35,14 @@ type Signal struct {
 	Latitude        *float64    `json:"latitude"`
 	PCI             *string     `json:"pci"`
 	TAC             *string     `json:"tac"`
+	LAC             *string     `json:"lac"`
+	RAC             *string     `json:"rac"`
+	FrequencyBand   *string     `json:"frequency_band"`
+	Arfcn           *string     `json:"arfcn"`
+	Frequency       *string     `json:"frequency"`
+	Rscp            *string     `json:"rscp"`
+	Ecn0            *string     `json:"ecn0"`
+	Rxlev           *string     `json:"rxlev"`
 	RecordTime      *CustomTime `json:"record_time"`
 }
 

@@ -16,5 +16,13 @@ CREATE TABLE IF NOT EXISTS signal (
     latitude REAL,
     pci TEXT,
     tac TEXT,
+    lac TEXT,
+    rac TEXT,
+    frequency_band TEXT,
+    arfcn TEXT,
+    frequency TEXT,
+    rscp TEXT,
+    ecn0 TEXT,
+    rxlev TEXT,
     record_time TIMESTAMPTZ
 );
