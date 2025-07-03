@@ -128,8 +128,6 @@ func GetCSV(ctx *gin.Context) {
 
 	tx := dbutil.GormDB(ctx)
 
-	userID := 3
-
 	driveIDstr := ctx.Query("drive_id")
 	if driveIDstr == "" {
 		ctx.Status(http.StatusBadRequest)
@@ -146,7 +144,7 @@ func GetCSV(ctx *gin.Context) {
 
 	err = tx.Table("signal AS s").
 		Joins("JOIN drive AS d ON s.drive_id = d.id").
-		Where("d.user_id = ? AND d.id = ?", userID, driveID).
+		Where("d.id = ?", driveID).
 		Select("s.*").
 		Scan(&signals).Error
 	if err != nil {
